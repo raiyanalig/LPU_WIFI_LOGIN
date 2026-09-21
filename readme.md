@@ -230,47 +230,48 @@ Checking Wi-Fi... ✓ Login successful
 
 ---
 
-# How It Works
+## How It Works
 
-```text
-                    login
-                      │
-                      ▼
-                  login.cmd
-                      │
-                      ▼
-                   login.py
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-          ▼                       ▼
- Credential Manager          Wi-Fi Portal
-          │                       │
-          │                       ▼
-          │                 GET Login Page
-          │                       │
-          │                ┌──────┴──────┐
-          │                │             │
-          │             Already       Login Required
-          │             Logged In          │
-          │                │               ▼
-          │                │          Extract Form
-          │                │               │
-          │                │               ▼
-          │                │         Submit HTTP POST
-          │                │               │
-          │                │               ▼
-          │                │          Authentication
-          │                │               │
-          └────────────────┴───────┬───────┘
-                                   ▼
-                            Verify Response
-                                   │
-                                   ▼
-                            Login Successful
+```mermaid
+flowchart TD
+
+    U[User] -->|Runs login command| C[login.cmd]
+
+    C -->|Launches| P[login.py]
+
+    P -->|Read username| UF[.lpu_username]
+
+    P -->|Retrieve password| KC[Windows Credential Manager]
+
+    P -->|Create HTTP Session| S[Requests Session]
+
+    S -->|GET Portal| LP[LPU Captive Portal]
+
+    LP -->|Return Portal Response| S
+
+    S -->|Analyze Response| D{Already Logged In?}
+
+    D -->|Yes| A[Display: Already Logged In]
+
+    D -->|No| F[BeautifulSoup Form Parser]
+
+    F -->|Extract Current Form| FD[Form Data]
+
+    P -->|Add Username + Password| FD
+
+    FD -->|POST mode=191| E[E24onlineHTTPClient]
+
+    E -->|Authentication Response| V{Login Successful?}
+
+    V -->|Yes| LS[Display: Login Successful]
+
+    V -->|No| ER[Display: Login Failed / Error]
+
+    A --> END[End]
+    LS --> END
+    ER --> END
 ```
 
----
 
 # Authentication Flow
 
@@ -555,7 +556,7 @@ again.
 For a new installation:
 
 ```powershell
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git clone https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
 
 cd YOUR-REPOSITORY
 
@@ -721,12 +722,12 @@ MIT License
 
 # Author
 
-**Your Name**
+**Raiyan Ali**
 
 GitHub:
 
 ```text
-https://github.com/YOUR-USERNAME
+https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
 ```
 
 ---
