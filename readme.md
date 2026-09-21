@@ -70,7 +70,7 @@ Before using the project, make sure you have:
 ## 1. Clone the Repository
 
 ```powershell
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git clone https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
 ```
 
 Move into the project directory:
