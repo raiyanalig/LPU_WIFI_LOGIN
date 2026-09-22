@@ -390,59 +390,9 @@ flowchart TD
 
 ---
 
-# 🔄 Authentication Flow
 
-```text
-login
-  ↓
-Platform launcher
-  ↓
-login.py
-  ↓
-Read username
-  ↓
-Retrieve password from OS credential store
-  ↓
-Create HTTP session
-  ↓
-Request captive portal
-  ↓
-Check authentication state
-  ↓
-If required → parse login form
-  ↓
-Add credentials and required parameters
-  ↓
-POST authentication request
-  ↓
-Verify response
-  ↓
-Display result
-```
 
----
 
-# 🌐 Authentication Endpoint
-
-The captive-portal authentication request uses:
-
-```text
-https://internet.lpu.in/24online/servlet/E24onlineHTTPClient
-```
-
-Method:
-
-```text
-POST
-```
-
-The login request includes:
-
-```text
-mode=191
-```
-
----
 
 # 🚀 Why Direct HTTP?
 
@@ -725,13 +675,13 @@ Do not use it to:
 - Circumvent access controls
 - Access networks without permission
 - Use another user's credentials
-- Publish or distribute private credentials
+
 
 ---
 
 # 📌 Project Status
 
-**Status:** Working
+**Status:** 
 
 Current functionality:
 
