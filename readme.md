@@ -299,27 +299,6 @@ login.cmd
 
 ---
 
-# 🛑 `.gitignore`
-
-Recommended:
-
-```gitignore
-# Local credentials
-.lpu_username
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Environment files
-.env
-
-# IDE
-.vscode/
-.idea/
-```
 
 
 
