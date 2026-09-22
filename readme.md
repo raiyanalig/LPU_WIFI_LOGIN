@@ -1,127 +1,60 @@
-
 # Auto Wi-Fi Login
 
 A lightweight Windows CLI utility that automates captive-portal Wi-Fi authentication using Python and direct HTTP requests.
 
-Instead of opening a browser and manually entering your credentials every time, simply run:
+Instead of opening a browser and entering credentials every time, run:
 
 ```powershell
 login
 ```
 
-The application checks the captive portal, detects whether you are already authenticated, and automatically performs the login when authentication is required.
+The tool checks the captive portal, detects an existing session, and logs in when authentication is required.
 
 ---
 
-## Features
+# 🚀 Quick Start
 
-- One-command Wi-Fi login
-- No browser required
-- Fast direct HTTP authentication
-- Detects already authenticated sessions
-- Secure password storage using Windows Credential Manager
-- Automatically extracts the current login form
-- Handles network, timeout, and authentication errors
-- Works from Windows PowerShell and CMD
-- No credentials stored directly in the source code
+Follow these steps from top to bottom.
 
----
+## 1. Requirements
 
-## Tech Stack
-
-| Technology                 | Purpose                                    |
-| -------------------------- | ------------------------------------------ |
-| Python 3                   | Main application                           |
-| Requests                   | HTTP communication with the captive portal |
-| BeautifulSoup4             | HTML and form parsing                      |
-| Keyring                    | Secure credential access                   |
-| Windows Credential Manager | Password storage                           |
-| Windows Batch (`.cmd`)   | Creates the`login` command               |
-
----
-
-## Project Structure
-
-```text
-LPU_WIFI_LOGIN/
-│
-├── login.py          # Main authentication program
-├── setup.py          # First-time credential configuration
-├── login.cmd         # Windows command launcher
-├── .gitignore        # Git ignored files
-└── README.md         # Project documentation
-```
-
----
-
-# Requirements
-
-Before using the project, make sure you have:
-
-- Windows 10 or Windows 11
-- Python 3 installed
-- Access to the Wi-Fi network using the captive portal
+- Windows 10 / 11
+- Python 3
 - PowerShell or Command Prompt
+- Access to the target Wi-Fi captive portal
 
----
-
-# Installation
-
-## 1. Clone the Repository
-
-```powershell
-git clone https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
-```
-
-Move into the project directory:
-
-```powershell
-cd LPU_WIFI_LOGIN
-```
-
-Alternatively, download the repository as a ZIP file from GitHub and extract it.
-
----
-
-## 2. Verify Python
-
-Run:
+Check Python:
 
 ```powershell
 py --version
 ```
 
-Example:
+---
 
-```text
-Python 3.14.0
+## 2. Download the Project
+
+### Clone with Git
+
+```powershell
+git clone https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
+cd LPU_WIFI_LOGIN
 ```
 
-If Python is not installed, install Python for Windows first.
+### Or
+
+Download the ZIP from GitHub, extract it, and open a terminal **inside the `LPU_WIFI_LOGIN` folder**.
 
 ---
 
 ## 3. Install Dependencies
 
-Run:
-
 ```powershell
 py -m pip install requests beautifulsoup4 keyring
 ```
 
-The required packages are:
-
-```text
-requests
-beautifulsoup4
-keyring
-```
-
 ---
 
-# First-Time Setup
-
-Before using the `login` command, configure your Wi-Fi credentials.
+## 4. Configure Credentials
 
 Run:
 
@@ -129,105 +62,60 @@ Run:
 py setup.py
 ```
 
-You will be prompted for your credentials:
+Enter your username and password when prompted.
 
-```text
-Enter your LPU username:
-Enter your LPU password:
-```
-
-The setup program:
-
-1. Reads your username
-2. Reads your password securely
-3. Stores the username locally
-4. Stores the password using Windows Credential Manager
-
-Your password is never written into `login.py`.
+- Username → stored locally
+- Password → stored using Windows Credential Manager
+- Password is not written into the source code
 
 ---
 
-# Run the Login
+## 5. Test the Login
 
-Make sure you are connected to the Wi-Fi network that uses the captive portal.
-
-You can first test the Python program directly:
+Make sure you are connected to the Wi-Fi network, then run:
 
 ```powershell
 py login.py
 ```
 
-Example:
+Expected:
 
 ```text
 Checking Wi-Fi... ✓ Login successful
 ```
 
-If you are already authenticated:
+or:
 
 ```text
 Checking Wi-Fi... ✓ Already logged in
 ```
 
-You can also test the Windows launcher:
+---
+
+## 6. Verify the Launcher
+
+`login.cmd` must contain exactly:
+
+```cmd
+@echo off
+py "%~dp0login.py"
+```
+
+Test it from the project folder:
 
 ```powershell
 .\login.cmd
 ```
 
-The launcher file should contain exactly:
+If this works, continue to the next step.
 
-```cmd
-@echo off
-py "%~dp0login.py"
-```
-
-`%~dp0` automatically points to the folder where `login.cmd` is located, so the project does not depend on a specific Windows username, drive letter, or installation path.
+> `%~dp0` automatically points to the folder containing `login.cmd`, so no username, drive letter, or hard-coded installation path is required.
 
 ---
 
-# Use `login` as a Global Command
+## 7. Enable the `login` Command
 
-The repository contains:
-
-```text
-login.cmd
-```
-
-which launches:
-
-```text
-login.py
-```
-
-The `login.cmd` file should contain exactly:
-
-```cmd
-@echo off
-py "%~dp0login.py"
-```
-
-This is portable because `%~dp0` automatically refers to the directory containing `login.cmd`.
-
-To use:
-
-```powershell
-login
-```
-
-from any directory, add the **current project directory** to your Windows user `PATH`.
-
-## Add the Project Directory to PATH
-
-Open PowerShell **inside the `LPU_WIFI_LOGIN` project directory**.
-
-For example:
-
-```powershell
-cd "PATH\TO\LPU_WIFI_LOGIN"
-```
-
-Then copy and paste the following code exactly. You do not need to change any username or path:
+Open PowerShell **inside the `LPU_WIFI_LOGIN` folder** and copy-paste this exactly:
 
 ```powershell
 $projectPath = (Get-Location).Path
@@ -247,15 +135,13 @@ Write-Host "LPU Wi-Fi Login added to PATH successfully."
 Write-Host "Project: $projectPath"
 ```
 
-The command automatically detects the directory you are currently in. It does not require a hard-coded path such as:
+This automatically uses the current project folder. You do **not** need to replace the path with your own username or folder
 
-```text
-C:\Users\Username\LPU_WIFI_LOGIN
-```
+Windows uses PATH to search directories for commands
 
-Windows uses the directories listed in `PATH` when searching for commands. citeturn893334search0turn893334search6
+---
 
-## Verify the Command
+## 8. Verify
 
 Run:
 
@@ -263,211 +149,137 @@ Run:
 where.exe login
 ```
 
-You should see the location of your `login.cmd`, for example:
+It should point to:
 
 ```text
-H:\Extension\LPU_WIFI_LOGIN\login.cmd
+...\LPU_WIFI_LOGIN\login.cmd
 ```
 
-`where.exe` searches the current directory and directories listed in `PATH`. citeturn893334search1
+Then close the current terminal and open a **new** PowerShell / Command Prompt / VS Code terminal.
 
-## Restart the Terminal
-
-Close the current PowerShell, Command Prompt, or VS Code terminal and open a new one so the updated user environment is loaded.
-
-Then run:
+Run:
 
 ```powershell
 login
 ```
 
-You can run it from any directory.
+You can now use `login` from any directory.
 
-Example:
+---
+
+# ✨ Features
+
+- One-command Wi-Fi login
+- No browser required
+- Direct HTTP authentication
+- Detects already authenticated sessions
+- Secure password storage with Windows Credential Manager
+- Automatically extracts the current login form
+- Handles network, timeout, and authentication errors
+- Works from PowerShell and CMD
+- No credentials hard-coded in source files
+- Portable `login.cmd` launcher
+
+---
+
+# 📁 Project Structure
 
 ```text
-PS C:\Users\Username> login
-
-Checking Wi-Fi... ✓ Login successful
-```
-
-You can also verify it again with:
-
-```powershell
-where.exe login
+LPU_WIFI_LOGIN/
+│
+├── login.py          # Main authentication program
+├── setup.py          # First-time credential configuration
+├── login.cmd         # Windows command launcher
+├── .gitignore        # Ignored local/private files
+└── README.md         # Documentation
 ```
 
 ---
 
-## How It Works
+# ⚙️ How It Works
 
 ```mermaid
 flowchart TD
-
-    U[User] -->|Runs login command| C[login.cmd]
-
+    U[User] -->|login| C[login.cmd]
     C -->|Launches| P[login.py]
 
     P -->|Read username| UF[.lpu_username]
-
     P -->|Retrieve password| KC[Windows Credential Manager]
 
-    P -->|Create HTTP Session| S[Requests Session]
+    P -->|GET Portal| LP[LPU Captive Portal]
+    LP -->|Portal Response| D{Already Logged In?}
 
-    S -->|GET Portal| LP[LPU Captive Portal]
+    D -->|Yes| A[Display Already Logged In]
+    D -->|No| F[Parse Login Form]
 
-    LP -->|Return Portal Response| S
-
-    S -->|Analyze Response| D{Already Logged In?}
-
-    D -->|Yes| A[Display: Already Logged In]
-
-    D -->|No| F[BeautifulSoup Form Parser]
-
-    F -->|Extract Current Form| FD[Form Data]
-
-    P -->|Add Username + Password| FD
-
+    F --> FD[Build Form Data]
+    P -->|Add Credentials| FD
     FD -->|POST mode=191| E[E24onlineHTTPClient]
 
     E -->|Authentication Response| V{Login Successful?}
-
-    V -->|Yes| LS[Display: Login Successful]
-
-    V -->|No| ER[Display: Login Failed / Error]
-
-    A --> END[End]
-    LS --> END
-    ER --> END
-```
-
-
-# Authentication Flow
-
-The application follows this process:
-
-```text
-1. Read saved username
-             ↓
-2. Retrieve password from Windows Credential Manager
-             ↓
-3. Create an HTTP session
-             ↓
-4. Request the captive portal
-             ↓
-5. Check whether the session is already authenticated
-             ↓
-6. If authentication is required:
-             ↓
-7. Extract the current login form
-             ↓
-8. Add username/password and required parameters
-             ↓
-9. Submit HTTP POST request
-             ↓
-10. Verify the server response
-             ↓
-11. Display login status
+    V -->|Yes| S[Display Login Successful]
+    V -->|No| R[Display Login Failed / Error]
 ```
 
 ---
 
-# Authentication Endpoint
 
-The captive portal uses the following endpoint for authentication:
+# 🚀 Why Direct HTTP?
 
-```text
-https://internet.lpu.in/24online/servlet/E24onlineHTTPClient
-```
-
-The login operation uses an HTTP `POST` request.
-
-The portal uses:
-
-```text
-mode=191
-```
-
-as part of the login request.
-
----
-
-# Why Direct HTTP Instead of Browser Automation?
-
-The original approach used browser automation.
-
-### Browser-based approach
+### Browser Automation
 
 ```text
 Python
-   ↓
-Playwright
-   ↓
+  ↓
+Browser Automation
+  ↓
 Chromium
-   ↓
+  ↓
 Open Portal
-   ↓
-Find Username Field
-   ↓
-Enter Username
-   ↓
-Find Password Field
-   ↓
-Enter Password
-   ↓
+  ↓
+Enter Credentials
+  ↓
 Click Login
 ```
 
-This requires starting a browser and rendering the webpage.
-
-### Current approach
+### This Project
 
 ```text
 Python
-   ↓
+  ↓
 Requests
-   ↓
+  ↓
 GET Portal
-   ↓
-Extract Form
-   ↓
+  ↓
+Parse Form
+  ↓
 POST Authentication
-   ↓
+  ↓
 Verify Response
 ```
 
-The current implementation does not require a browser.
-
-This reduces startup overhead and makes the command faster and lighter.
+The current implementation does not require a browser, reducing startup overhead and resource usage.
 
 ---
 
-# Credential Security
+# 🔐 Credential Security
 
-Credentials should never be hard-coded into the source code.
-
-Avoid:
+Do not hard-code credentials:
 
 ```python
-USERNAME = "12345678"
-PASSWORD = "mypassword"
+USERNAME = "your_username"
+PASSWORD = "your_password"
 ```
 
-Instead, this project uses:
+This project uses:
 
 ```text
 Python
-   ↓
+  ↓
 Keyring
-   ↓
+  ↓
 Windows Credential Manager
 ```
-
-The password is retrieved only when the application needs to authenticate.
-
----
-
-# Local Credential Storage
 
 The username is stored locally in:
 
@@ -475,11 +287,7 @@ The username is stored locally in:
 C:\Users\<USERNAME>\.lpu_username
 ```
 
-The password is stored by:
-
-```text
-Windows Credential Manager
-```
+The password is stored through Windows Credential Manager.
 
 The password is not stored in:
 
@@ -491,40 +299,37 @@ login.cmd
 
 ---
 
-# `.gitignore`
+# 🛑 `.gitignore`
 
-Do not commit credentials or generated Python files to GitHub.
-
-Recommended `.gitignore`:
+Recommended:
 
 ```gitignore
+# Local credentials
 .lpu_username
+
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Environment files
 .env
+
+# IDE
 .vscode/
 .idea/
 ```
 
-Never commit:
 
-- Passwords
-- Authentication tokens
-- Session cookies
-- API keys
-- Private credentials
 
----
+# 🔧 Updating Credentials
 
-# Updating Your Password
-
-If your Wi-Fi password changes, run:
+If your Wi-Fi password changes:
 
 ```powershell
 py setup.py
 ```
-
-Enter the updated credentials.
 
 Then test:
 
@@ -534,21 +339,40 @@ login
 
 ---
 
-# Troubleshooting
+# 🧰 Troubleshooting
 
-## `login` is not recognized
+### `login` is not recognized
 
-Check whether Windows can find the command:
+Run:
 
 ```powershell
 where.exe login
 ```
 
-If nothing is returned, make sure the directory containing `login.cmd` is present in your user `PATH`.
+If nothing is returned:
+
+1. Make sure `login.cmd` exists.
+2. Make sure you added the project folder to User PATH.
+3. Close and reopen the terminal.
+4. Run `where.exe login` again.
 
 ---
 
-## `Password not found`
+### `py login.py` works but `login` does not
+
+The Python program is working; Windows likely cannot find `login.cmd`.
+
+Run:
+
+```powershell
+where.exe login
+```
+
+Then re-check the PATH setup.
+
+---
+
+### `Password not found`
 
 Run:
 
@@ -556,9 +380,7 @@ Run:
 py setup.py
 ```
 
-and configure your credentials again.
-
-You can also verify the keyring entry without displaying the password:
+To verify a stored credential without printing the password:
 
 ```powershell
 py -c "import keyring; p=keyring.get_password('LPU-WIFI','YOUR_USERNAME'); print('PASSWORD FOUND' if p else 'PASSWORD NOT FOUND')"
@@ -566,19 +388,21 @@ py -c "import keyring; p=keyring.get_password('LPU-WIFI','YOUR_USERNAME'); print
 
 ---
 
-## `Login form not found`
+### `Login form not found`
 
-The captive portal HTML may have changed.
-
-The application depends on the portal's form structure. If the portal changes its HTML, the form selector in `login.py` may need to be updated.
+The captive portal HTML may have changed. The form parsing logic in `login.py` may need to be updated.
 
 ---
 
-## `Cannot reach LPU portal`
+### `Cannot reach portal` / `Connection timed out`
 
-Make sure you are connected to the Wi-Fi network that provides the captive portal.
+Check that:
 
-Check your Wi-Fi connection before running:
+- You are connected to the required Wi-Fi.
+- The captive portal is reachable.
+- The network connection is active.
+
+Then retry:
 
 ```powershell
 login
@@ -586,21 +410,7 @@ login
 
 ---
 
-## `Connection timed out`
-
-The captive portal may be temporarily unavailable or the Wi-Fi network may not have completed its connection.
-
-Try:
-
-```powershell
-login
-```
-
-again after confirming your Wi-Fi connection.
-
----
-
-## `Login failed`
+### `Login failed`
 
 Check:
 
@@ -610,148 +420,78 @@ Check:
 - Account access
 - Captive portal availability
 
-If you recently changed your password, run:
+If your password changed:
 
 ```powershell
 py setup.py
 ```
 
-again.
-
 ---
 
-# Quick Start
+# 🧑‍💻 Development
 
-For a new installation:
+### Install
 
 ```powershell
 git clone https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
-
 cd LPU_WIFI_LOGIN
-
 py -m pip install requests beautifulsoup4 keyring
+```
 
-py setup.py
+### Run directly
 
+```powershell
 py login.py
 ```
 
-After configuring the `login` command, restart your terminal and run:
+### Run launcher
+
+```powershell
+.\login.cmd
+```
+
+### Global command
 
 ```powershell
 login
 ```
 
-To verify the command location:
+---
 
-```powershell
-where.exe login
-```
+# 🧱 Components
+
+| File | Responsibility |
+|---|---|
+| `setup.py` | Collects and stores credentials |
+| `login.py` | Handles portal detection and authentication |
+| `login.cmd` | Provides the `login` command |
 
 ---
 
-# Example
+# 🛡️ Security & Authorization
 
-### Successful Login
+This project is intended for automating authentication to a Wi-Fi network you are authorized to use.
 
-```text
-PS C:\Users\Username> login
-
-Checking Wi-Fi... ✓ Login successful
-```
-
-### Already Logged In
-
-```text
-PS C:\Users\Username> login
-
-Checking Wi-Fi... ✓ Already logged in
-```
-
-### Login Failure
-
-```text
-PS C:\Users\Username> login
-
-Checking Wi-Fi... ✗ Login failed
-  Check your username/password.
-```
-
-### Wi-Fi Unavailable
-
-```text
-PS C:\Users\Username> login
-
-Checking Wi-Fi... ✗ Cannot reach Wi-Fi portal
-  Connect to the required Wi-Fi network first.
-```
-
----
-
-# Development
-
-The application is divided into three main components.
-
-## `setup.py`
-
-Responsible for:
-
-- Collecting credentials
-- Normalizing the username
-- Saving the username
-- Storing the password securely
-
----
-
-## `login.py`
-
-Responsible for:
-
-- Reading credentials
-- Creating the HTTP session
-- Accessing the captive portal
-- Detecting existing sessions
-- Extracting the login form
-- Sending the authentication request
-- Verifying the response
-- Handling errors
-
----
-
-## `login.cmd`
-
-Responsible for providing the simple Windows command:
-
-```text
-login
-```
-
-It launches the Python authentication program.
-
----
-
-# Security and Authorization
-
-This project is intended for automating authentication to a Wi-Fi network that you are authorized to use
-
-Do not use this software to:
+Do not use it to:
 
 - Bypass authentication
 - Circumvent access controls
 - Access networks without permission
 - Use another user's credentials
-- Store or distribute credentials publicly
+
 
 ---
 
-# License
+# 📜 License
 
 MIT License
 
 ---
 
-# Author
+# 👤 Author
 
 **Raiyan Ali**
 
+GitHub:
 
+https://github.com/raiyanalig/LPU_WIFI_LOGIN
