@@ -693,7 +693,7 @@ Current functionality:
 - Linux/macOS CLI launcher structure
 - PowerShell, Bash, and Zsh setup instructions
 
-> Linux and macOS launcher/setup paths are included in the repository. Test authentication on the intended network and operating system before treating those platforms as production-verified.
+
 
 ---
 
