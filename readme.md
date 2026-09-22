@@ -460,7 +460,7 @@ login.cmd
 login
 ```
 
-Do not commit passwords, API keys, authentication tokens, cookies, or other private credentials to GitHub.
+
 
 ---
 
@@ -600,58 +600,7 @@ Check the Wi-Fi connection, username, password, account access, and captive-port
 
 ---
 
-# 🧑‍💻 Development
 
-Clone the repository:
-
-```bash
-git clone https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
-cd LPU_WIFI_LOGIN
-```
-
-Install dependencies:
-
-### Windows
-
-```powershell
-py -m pip install -r requirements.txt
-```
-
-### Linux / macOS
-
-```bash
-python3 -m pip install -r requirements.txt
-```
-
-Run the shared Python application directly:
-
-### Windows
-
-```powershell
-py login.py
-```
-
-### Linux / macOS
-
-```bash
-python3 login.py
-```
-
-Run the platform launcher:
-
-### Windows
-
-```powershell
-.\login.cmd
-```
-
-### Linux / macOS
-
-```bash
-./login
-```
-
----
 
 # 🧱 Components
 
