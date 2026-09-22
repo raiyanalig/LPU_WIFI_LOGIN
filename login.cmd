@@ -1,2 +1,2 @@
 @echo off
-py "%USERPROFILE%\lpu-login\login.py"
+py "%~dp0login.py"
