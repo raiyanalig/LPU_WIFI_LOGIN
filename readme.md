@@ -11,7 +11,9 @@ login
 The tool checks the captive portal, detects an existing session, and logs in when authentication is required.
 
 ---
+### 🪟 Windows
 
+Launcher: [`login.cmd`](./login.cmd)
 # 🚀 Quick Start
 
 Follow these steps from top to bottom.
