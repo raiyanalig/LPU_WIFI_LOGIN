@@ -730,54 +730,9 @@ It launches the Python authentication program.
 
 ---
 
-# Architecture
-
-```text
-┌─────────────────────┐
-│       User          │
-│                     │
-│       login         │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│     login.cmd       │
-│  Windows Launcher   │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│      login.py       │
-│   Python Application │
-└───────┬───────┬─────┘
-        │       │
-        │       ▼
-        │  ┌──────────────┐
-        │  │   Requests   │
-        │  └──────┬───────┘
-        │         │
-        │         ▼
-        │  ┌──────────────┐
-        │  │ Wi-Fi Portal │
-        │  └──────────────┘
-        │
-        ▼
-┌─────────────────────┐
-│       Keyring       │
-└──────────┬──────────┘
-           │
-           ▼
-┌──────────────────────────┐
-│ Windows Credential       │
-│ Manager                  │
-└──────────────────────────┘
-```
-
----
-
 # Security and Authorization
 
-This project is intended for automating authentication to a Wi-Fi network that you are authorized to use.
+This project is intended for automating authentication to a Wi-Fi network that you are authorized to use
 
 Do not use this software to:
 
@@ -799,23 +754,4 @@ MIT License
 
 **Raiyan Ali**
 
-GitHub:
 
-```text
-https://github.com/raiyanalig/LPU_WIFI_LOGIN.git
-```
-
----
-
-## Project Status
-
-**Status:** Working
-
-The application currently supports:
-
-- Direct HTTP authentication
-- Credential management
-- Session detection
-- CLI execution
-- Windows PowerShell/CMD support
-- Browserless authentication
